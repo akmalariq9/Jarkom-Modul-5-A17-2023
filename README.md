@@ -414,6 +414,12 @@ Berikut adalah penjelasan dari _syntax_ tersebut beserta masing-masing fungsinya
 
 `--to-source $ETH0_IP`: Menentukan alamat IP sumber untuk melakukan SNAT, menggunakan alamat IP yang telah diperoleh sebelumnya dari eth0.
 
+_Output_ dari nomor 1 adalah tiap _route_ dapat melakukan ping keluar (misalnya: google.com) seperti pada gambar berikut:
+
+![ping](https://cdn.discordapp.com/attachments/1150687865420906517/1184517860035416174/image.png?ex=658c4339&is=6579ce39&hm=fb9ba71f60f1c18ae11f2d3ad1631e2ca8cab324bc853b3dd069c3b468767067&)
+
+![ping2](https://cdn.discordapp.com/attachments/1150687865420906517/1184518049404030996/image.png?ex=658c4366&is=6579ce66&hm=bc9b359d8f8557f9f5012fd672e12b2ad90abce29f61146b275e001f96894abe&)
+
 ## **Soal Nomor 2**
 Kalian diminta untuk melakukan drop semua TCP dan UDP kecuali port 8080 pada TCP.
 
@@ -530,7 +536,9 @@ iptables -A PREROUTING -t nat -p tcp --dport 443 -d 192.177.0.18 -m statistic --
 
 iptables -A PREROUTING -t nat -p tcp --dport 443 -d 192.177.0.18 -j DNAT --to-destination 192.177.4.2
 ```
-Kemudian dapat dilakukan testing dengan cara membuka koneksi pada _webserver_ yaitu sein dan stark dengan syntax berikut untuk port 80 `while true; do nc -l -p 80 -c 'echo "ini sein"'; done` dan `while true; do nc -l -p 443 -c 'echo "ini stark"'; done`. Sedangkan untuk port 443 dapat menggunakan _syntax `while true; do nc -l -p 443 -c 'echo "ini sein"'; done` dan 
+Kemudian dapat dilakukan testing dengan cara membuka koneksi pada _webserver_ yaitu sein dan stark dengan syntax berikut untuk port 80 `while true; do nc -l -p 80 -c 'echo "ini sein"'; done` dan `while true; do nc -l -p 443 -c 'echo "ini stark"'; done`. 
+
+Sedangkan untuk port 443 dapat menggunakan _syntax `while true; do nc -l -p 443 -c 'echo "ini sein"'; done` dan 
 `while true; do nc -l -p 443 -c 'echo "ini stark"'; done`. Berikut adalah hasil testing yang dilakukan:
 
 ![nomor7-80](https://cdn.discordapp.com/attachments/1150687865420906517/1184479918403371008/image.png?ex=658c1fe3&is=6579aae3&hm=8dd626a13850931ca8b937bb1a37b1dfd672065a407f0440848632afb26ed583&)
@@ -593,6 +601,10 @@ Berikut adalah penjelasan dari bagian pada _syntax_ tersebut:
 `--limit 1/second`: Menetapkan batasan sebanyak satu log per detik.
 
 `--limit-burst 10`: Menetapkan batasan burst, yaitu jumlah log yang dapat dilakukan dalam satu waktu sebelum batasan per detik diambil kembali.
+
+Berikut adalah hasil dari _syntax_ yang dijalankan, sehingga terdapat _rules_ untuk membuat _log_ sehingga dapat dilihat paket yang telah didrop.
+
+![nomor10](https://cdn.discordapp.com/attachments/1150687865420906517/1184516962756345866/image.png?ex=658c4263&is=6579cd63&hm=a5304fc99143c9b10442ec99d7bf09a80f5176830b9767251006e570b8838bff&)
 
 # **Kendala Saat Pengerjaan**
 
