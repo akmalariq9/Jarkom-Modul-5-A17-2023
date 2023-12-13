@@ -420,6 +420,8 @@ _Output_ dari nomor 1 adalah tiap _route_ dapat melakukan ping keluar (misalnya:
 
 ![ping2](https://cdn.discordapp.com/attachments/1150687865420906517/1184518049404030996/image.png?ex=658c4366&is=6579ce66&hm=bc9b359d8f8557f9f5012fd672e12b2ad90abce29f61146b275e001f96894abe&)
 
+Dapat dilihat dari gambar tersebut bahwa Aura dan Sein sebagai _webserver_ dapat tersambung ke jaringan luar dengan cara ping google.com.
+
 ## **Soal Nomor 2**
 Kalian diminta untuk melakukan drop semua TCP dan UDP kecuali port 8080 pada TCP.
 
@@ -449,6 +451,8 @@ Dari _syntax_ tersebut dapat dilihat bahwa _node_ tersebut hanya menerima koneks
 ![Testing](https://cdn.discordapp.com/attachments/1150687865420906517/1184184881148866641/image.png?ex=658b0d1c&is=6578981c&hm=8b53ac6c1c5d4beb525cf0aa05589b1023f496eb86aedcf10ec93ae89a1bb6f0&)
 
 ![testing2](https://cdn.discordapp.com/attachments/1150687865420906517/1184184913591799808/image.png?ex=658b0d24&is=65789824&hm=2b051f562b7b55d08e14fc3bcd4bf3037d066bea18604f2fdff5b8ebe5671057&)
+
+Dari gambar tersebut dapat dilihat bahwa koneksi yang menggunakan port 8080 dapat mengirim dan menerima pesa, sedangkan untuk koneksi dengan port 8000 tidak bisa berkomunikasi.
 
 ## **Soal Nomor 3**
 Kepala Suku North Area meminta kalian untuk membatasi DHCP dan DNS Server hanya dapat dilakukan ping oleh maksimal 3 device secara bersamaan, selebihnya akan di drop.
@@ -484,7 +488,7 @@ Dalam _syntax_ tersebut dilakukan pembatasan untuk subnet dari GrobeForest, sert
 
 ![nomor4](https://cdn.discordapp.com/attachments/1150687865420906517/1184203176174424104/image.png?ex=658b1e26&is=6578a926&hm=48ee1ecbf1dabf27c4722849d90513001495b3e43ddb48d8a21dc19457b54377&)
 
-Dapat dilihat bahwa untuk _GrobeForest_ menunjukkan hasil _open_, sedangkan untuk _node_ lain _filtered_ atau tidak berhasil
+Dapat dilihat bahwa untuk _GrobeForest_ menunjukkan hasil _open_, sedangkan untuk _node_ lain _filtered_ atau tidak berhasil tersambung.
 
 ## **Soal Nomor 5**
 Selain itu, akses menuju WebServer hanya diperbolehkan saat jam kerja yaitu Senin-Jumat pada pukul 08.00-16.00.
@@ -522,6 +526,8 @@ _Testing_ dapat dilakukan dengan merubah _date_ dari _node_ lain lalu `nmap` ke 
 
 ![nomor6](https://cdn.discordapp.com/attachments/1150687865420906517/1184210886597034074/image.png?ex=658b2554&is=6578b054&hm=7089bfb6cac9cae2083d734834bea4873bc8c4f5e8c95a076720bbf71d20f767&)
 
+Dapat dilihat bahwa koneksi yang berasal dari GrobeForest bisa diterima dan statusnya open, sedangkan dari SchwerMountain akan terkena filter sesuai _rules_ yang telah ditetapkan. 
+
 ## **Soal Nomor 7**
 Karena terdapat 2 WebServer, kalian diminta agar setiap client yang mengakses Sein dengan Port 80 akan didistribusikan secara bergantian pada Sein dan Stark secara berurutan dan request dari client yang mengakses Stark dengan port 443 akan didistribusikan secara bergantian pada Sein dan Stark secara berurutan.
 
@@ -545,7 +551,7 @@ Sedangkan untuk port 443 dapat menggunakan _syntax `while true; do nc -l -p 443 
 
 ![nomor7-443](https://cdn.discordapp.com/attachments/1150687865420906517/1184480387922133052/image.png?ex=658c2053&is=6579ab53&hm=78430ddc12f627d5ad48778dee8135f0033d3f5462fc73d0a85e3e87adcdb998&)
 
-Dapat dilihat bahwa ketika terdapat _node_ yang mengakses _webserver_, akan muncul log atau pesan bahwa sein dan stark telah bekerja secara bergantian
+Dapat dilihat bahwa ketika terdapat _node_ yang mengakses _webserver_, akan muncul log atau pesan bahwa sein dan stark telah bekerja secara bergantian.
 
 ## **Soal Nomor 8**
 Karena berbeda koalisi politik, maka subnet dengan masyarakat yang berada pada Revolte dilarang keras mengakses WebServer hingga masa pencoblosan pemilu kepala suku 2024 berakhir. Masa pemilu (hingga pemungutan dan penghitungan suara selesai) kepala suku bersamaan dengan masa pemilu Presiden dan Wakil Presiden Indonesia 2024.
@@ -571,7 +577,7 @@ Dapat dilihat bahwa Revolte _fail_ saat mengakses _webserver_ sedangkan GrobeFor
 
 ## **Soal Nomor 9**
 Sadar akan adanya potensial saling serang antar kubu politik, maka WebServer harus dapat secara otomatis memblokir  alamat IP yang melakukan scanning port dalam jumlah banyak (maksimal 20 scan port) di dalam selang waktu 10 menit. 
-(clue: test dengan nmap)
+(clue: test dengan nmap).
 
 ## **Penyelesaian Soal Nomor 9**
 _Coming soon_.
@@ -602,10 +608,11 @@ Berikut adalah penjelasan dari bagian pada _syntax_ tersebut:
 
 `--limit-burst 10`: Menetapkan batasan burst, yaitu jumlah log yang dapat dilakukan dalam satu waktu sebelum batasan per detik diambil kembali.
 
-Berikut adalah hasil dari _syntax_ yang dijalankan, sehingga terdapat _rules_ untuk membuat _log_ sehingga dapat dilihat paket yang telah didrop.
+Berikut adalah hasil dari test _syntax_ yang telah dijalankan:
 
 ![nomor10](https://cdn.discordapp.com/attachments/1150687865420906517/1184516962756345866/image.png?ex=658c4263&is=6579cd63&hm=a5304fc99143c9b10442ec99d7bf09a80f5176830b9767251006e570b8838bff&)
 
+Pada _list_ iptables tersebut terdapat _rules_ untuk membuat _log_ sehingga dapat dilihat paket yang telah didrop. 
 # **Kendala Saat Pengerjaan**
 
 - Ketidaktelitian saat membuat _tree_ dan _subnetting_ sehingga banyak terjadi kegagalan saat melakukan kongfigurasi di GNS3.
