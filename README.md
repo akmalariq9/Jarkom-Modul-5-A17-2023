@@ -580,7 +580,56 @@ Sadar akan adanya potensial saling serang antar kubu politik, maka WebServer har
 (clue: test dengan nmap).
 
 ## **Penyelesaian Soal Nomor 9**
-_Coming soon_.
+Untuk menyelesaikan soal nomor 9, kita perlu melakukan konfigurasi iptables pada setiap webserver, yaitu Sein dan Stark.
+
+```bash
+#Membuat rantai baru
+iptables -N scan_port
+
+#Melakukan aturan-aturan pada rantai. 
+iptables -A INPUT -m recent --name scan_port --update --seconds 600 --hitcount 20 -j DROP
+iptables -A FORWARD -m recent --name scan_port --update --seconds 600 --hitcount 20 -j DROP
+
+# Menambahkan IP ke set scan_port
+iptables -A INPUT -m recent --name scan_port --set -j ACCEPT
+iptables -A FORWARD -m recent --name scan_port --set -j ACCEPT
+```
+Webserver pertama-tama akan mengecek apakah sebuah alamat IP berada dalam rantai scan_port dan telah melakukan 20 upaya scanning dalam 10 menit terakhir.
+```bash
+-m recent --name scan_port --update --seconds 600 --hitcount 20
+```
+Ketika ditemukan sebuah IP yang melanggar rule tersebut, maka IP tersebut akan diblokir
+```bash
+-j DROP
+```
+
+Lalu, untuk melakukan testing pada client, kita dapat menjalankan code berikut.
+```bash
+for i in {1..25}; do
+  echo $i
+  nmap -p 80 -T2 -sS 192.177.4.2
+  sleep 3
+done
+```
+
+Namun, dengan menggunakan testing ini, kita akan mencapai batas hitpoint dengan lebih cepat, sifat dari nmap dapat ditentukan dan untuk mencapai tepat 20 nmap scan dengan 20 hitpoint, kita perlu memakai konfigurasi T1 (T0-5 semakin rendah semakin lambat). 
+
+**T3 (DEFAULT) -> 0.45s**
+
+![Alt text](image-3.png)
+
+**T2 -> 1.05s**
+
+![Alt text](image-2.png)
+
+**T1 -> 30.22s**
+![Alt text](image-4.png)
+
+#### Hal ini akan memakan waktu yang sangat bangat. Dengan itu, kita dapat juga melakukan testing dengan ping IP dari webserver tersebut, seperti berikut.
+
+![Alt text](image.png)
+![Alt text](image-1.png)
+
 
 ## **Soal Nomor 10**
 Karena kepala suku ingin tau paket apa saja yang di-drop, maka di setiap node server dan router ditambahkan logging paket yang di-drop dengan standard syslog level. 
