@@ -565,7 +565,6 @@ Pemilu_Start=$(date -d "2023-10-19T00:00" +"%Y-%m-%dT%H:%M")
 
 Pemilu_End=$(date -d "2024-02-15T00:00" +"%Y-%m-%dT%H:%M")
 
-# Atur waktu untuk masa pemilu
 iptables -A INPUT -p tcp -s $Revolte_Subnet --dport 80 -m time --datestart "$Pemilu_Start" --datestop "$Pemilu_End" -j DROP
 ``` 
 
@@ -583,15 +582,14 @@ Sadar akan adanya potensial saling serang antar kubu politik, maka WebServer har
 Untuk menyelesaikan soal nomor 9, kita perlu melakukan konfigurasi iptables pada setiap webserver, yaitu Sein dan Stark.
 
 ```bash
-#Membuat rantai baru
 iptables -N scan_port
 
-#Melakukan aturan-aturan pada rantai. 
 iptables -A INPUT -m recent --name scan_port --update --seconds 600 --hitcount 20 -j DROP
+
 iptables -A FORWARD -m recent --name scan_port --update --seconds 600 --hitcount 20 -j DROP
 
-# Menambahkan IP ke set scan_port
 iptables -A INPUT -m recent --name scan_port --set -j ACCEPT
+
 iptables -A FORWARD -m recent --name scan_port --set -j ACCEPT
 ```
 Webserver pertama-tama akan mengecek apakah sebuah alamat IP berada dalam rantai scan_port dan telah melakukan 20 upaya scanning dalam 10 menit terakhir.
@@ -616,20 +614,20 @@ Namun, dengan menggunakan testing ini, kita akan mencapai batas hitpoint dengan 
 
 **T3 (DEFAULT) -> 0.45s**
 
-![Alt text](image-3.png)
+![T3 Default](https://cdn.discordapp.com/attachments/1150687865420906517/1184716131185987665/image-3.png?ex=658cfbe0&is=657a86e0&hm=f4b07fc546ac70798e36b3efe5ca7d3a1daf22ba1e319d8a1d643b260ed386af&)
 
 **T2 -> 1.05s**
 
-![Alt text](image-2.png)
+![T2 Default](https://cdn.discordapp.com/attachments/1150687865420906517/1184716235993256066/image-2.png?ex=658cfbf9&is=657a86f9&hm=74b78311ca1bb925d4e55ee145b9afb88413e6ae9ed9fea6e139d3a06d86302c&)
 
 **T1 -> 30.22s**
-![Alt text](image-4.png)
+![T1 30](https://cdn.discordapp.com/attachments/1150687865420906517/1184716341480009728/image-4.png?ex=658cfc12&is=657a8712&hm=024c623a861a1356339e8a1a7364db58e601610d390ca3c5db0dea403512e613&)
 
-#### Hal ini akan memakan waktu yang sangat bangat. Dengan itu, kita dapat juga melakukan testing dengan ping IP dari webserver tersebut, seperti berikut.
+Hal ini akan memakan waktu yang sangat banyak. Oleh karena itu, kita dapat juga melakukan testing dengan ping IP dari _webserver_ tersebut, seperti berikut:
 
-![Alt text](image.png)
-![Alt text](image-1.png)
+![Next](https://cdn.discordapp.com/attachments/1150687865420906517/1184716483750789131/image.png?ex=658cfc34&is=657a8734&hm=42e516aac06295150f18a73e89e7bc3847dc84ef7f178503a84abd154096e416&)
 
+![Last](https://cdn.discordapp.com/attachments/1150687865420906517/1184716720586366984/image-1.png?ex=658cfc6d&is=657a876d&hm=0e7f3aa32aa53169a5d169f5e28e58bf924ef69aa7ed028edf8a2d34d571224f&)
 
 ## **Soal Nomor 10**
 Karena kepala suku ingin tau paket apa saja yang di-drop, maka di setiap node server dan router ditambahkan logging paket yang di-drop dengan standard syslog level. 
